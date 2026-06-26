@@ -1,0 +1,7 @@
+{
+  "name": "activity-video-studio-lp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Marketing landing page for ActivityVideoStudio (static site + serverless contact form)."
+}

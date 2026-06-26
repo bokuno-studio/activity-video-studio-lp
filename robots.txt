@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://activity-video-studio-lp.vercel.app/sitemap.xml

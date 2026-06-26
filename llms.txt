@@ -1,0 +1,31 @@
+# ActivityVideoStudio
+
+> A macOS app that overlays activity data (.FIT files from GPS smartwatches) onto action-camera video — rendering heart rate, pace, distance, elevation, cadence, and a live GPS map. Free on the Mac App Store.
+
+## What it is
+ActivityVideoStudio syncs .FIT activity files with action-camera MP4 footage and burns telemetry overlays into the video. It is a native macOS app built for trail runners, cyclists, and other action-camera users who want data-rich videos of their activities.
+
+## Key facts
+- Platform: macOS 14 (Sonoma) or later; Apple Silicon or Intel Mac
+- Price: Free
+- Privacy: All processing is local on the Mac. No data collection, no server uploads, App Sandbox enabled, no analytics SDKs.
+- Inputs: .FIT activity files (recorded by GPS smartwatches); action-camera MP4 video (H.264 / HEVC, up to 4K)
+- Outputs: a single MP4 with overlays burned in
+
+## Features
+- GPS mini-map with live position (satellite imagery tiles)
+- Heart-rate zone colors (reads HR zones from the .FIT file)
+- Elevation profile graph with a live progress indicator
+- Large-file / 4K support via streaming processing (handles 10 GB+ videos)
+- Multi-clip auto-join for action cameras that split footage into numbered MP4s
+- Text overlays with fade in/out
+- Auto-generated description text for video sharing
+
+## Compatibility note
+ActivityVideoStudio is an independent app. It works with the open .FIT and .MP4 file formats and is not affiliated with, endorsed by, or sponsored by any hardware maker.
+
+## Links
+- App Store: https://apps.apple.com/app/activityvideostudio/id6764239734
+- Website: https://activity-video-studio-lp.vercel.app/
+- Privacy policy: https://bokuno-studio.github.io/activity-video-studio/privacy.html
+- Contact: https://activity-video-studio-lp.vercel.app/#contact

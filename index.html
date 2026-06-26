@@ -3,85 +3,111 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ActivityVideoStudio — Activity Data Overlay for macOS</title>
-  <meta name="description" content="Sync .FIT activity data with action-camera footage and overlay heart rate, pace, and GPS track — natively on macOS.">
-  <meta property="og:title" content="ActivityVideoStudio — Activity Data Overlay for macOS">
-  <meta property="og:description" content="アクティビティデータとアクションカメラ映像を自動同期。心拍・ペース・GPSトラックをオーバーレイ合成する Mac アプリ。">
+  <title>ActivityVideoStudio — アクティビティデータを動画にオーバーレイ（Mac）</title>
+  <meta name="description" content="GPSスマートウォッチの.FITデータとアクションカメラ映像を自動同期。心拍・ペース・距離・標高・GPSマップを動画にオーバーレイ合成する無料のmacOSアプリ。">
+  <link rel="canonical" href="https://activity-video-studio-lp.vercel.app/">
+  <meta name="theme-color" content="#0f172a">
+  <link rel="icon" type="image/png" href="/assets/icon-256.png">
+  <link rel="apple-touch-icon" href="/assets/icon-512.png">
+
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
+  <meta property="og:site_name" content="ActivityVideoStudio">
+  <meta property="og:locale" content="ja_JP">
+  <meta property="og:url" content="https://activity-video-studio-lp.vercel.app/">
+  <meta property="og:title" content="ActivityVideoStudio — アクティビティデータを動画にオーバーレイ（Mac）">
+  <meta property="og:description" content="GPSスマートウォッチの.FITデータとアクションカメラ映像を自動同期。心拍・ペース・GPSマップをオーバーレイ合成する無料のmacOSアプリ。">
+  <meta property="og:image" content="https://activity-video-studio-lp.vercel.app/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="750">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ActivityVideoStudio — アクティビティデータを動画にオーバーレイ（Mac）">
+  <meta name="twitter:description" content="GPSスマートウォッチの.FITデータとアクションカメラ映像を自動同期。心拍・ペース・GPSマップをオーバーレイ合成する無料のmacOSアプリ。">
+  <meta name="twitter:image" content="https://activity-video-studio-lp.vercel.app/assets/og.png">
+
+  <!-- Structured data: the app (SEO + GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ActivityVideoStudio",
+    "operatingSystem": "macOS 14.0 or later",
+    "applicationCategory": "MultimediaApplication",
+    "description": "GPSスマートウォッチで記録した.FITアクティビティデータとアクションカメラのMP4映像を同期し、心拍・ペース・距離・標高・GPSマップを動画にオーバーレイ合成するmacOSアプリ。",
+    "url": "https://activity-video-studio-lp.vercel.app/",
+    "downloadUrl": "https://apps.apple.com/app/activityvideostudio/id6764239734",
+    "softwareVersion": "1.0",
+    "image": "https://activity-video-studio-lp.vercel.app/assets/og.png",
+    "screenshot": "https://activity-video-studio-lp.vercel.app/assets/og.png",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "JPY" },
+    "author": { "@type": "Person", "name": "naoki iwasa" }
+  }
+  </script>
+  <!-- Structured data: FAQ (SEO rich results + GEO) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type":"Question","name":"対応している機材・ファイルは？","acceptedAnswer":{"@type":"Answer","text":"GPSスマートウォッチで記録した.FITアクティビティファイルと、アクションカメラのMP4動画（H.264 / HEVC、最大4K）に対応しています。"}},
+      {"@type":"Question","name":"料金はかかりますか？","acceptedAnswer":{"@type":"Answer","text":"無料でご利用いただけます。"}},
+      {"@type":"Question","name":"データのプライバシーは？","acceptedAnswer":{"@type":"Answer","text":"すべての処理はMac上でローカルに完結します。データ収集やサーバーへのアップロードは一切行いません。"}},
+      {"@type":"Question","name":"どんな項目を表示できますか？","acceptedAnswer":{"@type":"Answer","text":"心拍数（ゾーン別カラー）、ペース、距離、標高プロファイル、ケイデンス、GPSミニマップなどをリアルタイムにオーバーレイ表示できます。"}},
+      {"@type":"Question","name":"長尺・大容量の動画でも使えますか？","acceptedAnswer":{"@type":"Answer","text":"1〜15時間、10GB超の4K動画もストリーミング処理で安定して書き出せます。"}}
+    ]
+  }
+  </script>
   <style>
     :root {
       --bg: #0f172a; --card: #1e293b; --text: #f1f5f9; --muted: #94a3b8;
       --accent: #3b82f6; --accent-light: #60a5fa; --border: #334155; --green: #22c55e;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg); color: var(--text); line-height: 1.7;
-    }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
     a { color: inherit; }
-
-    nav {
-      display: flex; justify-content: space-between; align-items: center;
-      padding: 1rem 2rem; border-bottom: 1px solid var(--border);
-      position: sticky; top: 0; background: rgba(15,23,42,0.85);
-      backdrop-filter: blur(8px); z-index: 10;
-    }
-    nav .logo { font-weight: 700; font-size: 1.05rem; }
+    nav { display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(15,23,42,0.85); backdrop-filter: blur(8px); z-index: 10; }
+    nav .logo { font-weight: 700; font-size: 1.05rem; display: flex; align-items: center; gap: 0.5rem; }
+    nav .logo img { width: 24px; height: 24px; border-radius: 6px; }
     nav a { color: var(--muted); text-decoration: none; font-size: 0.9rem; margin-left: 1.5rem; }
     nav a:hover { color: var(--text); }
-
     .hero { text-align: center; padding: 5rem 1.5rem 4rem; max-width: 760px; margin: 0 auto; }
-    .badge {
-      display: inline-block; background: rgba(59,130,246,0.15);
-      border: 1px solid rgba(59,130,246,0.4); color: var(--accent-light);
-      font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
-      padding: 0.25rem 0.75rem; border-radius: 99px; margin-bottom: 1.5rem;
-    }
+    .badge { display: inline-block; background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.4); color: var(--green); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.04em; padding: 0.25rem 0.8rem; border-radius: 99px; margin-bottom: 1.5rem; }
     .hero h1 { font-size: clamp(2rem, 5vw, 3rem); font-weight: 800; line-height: 1.2; margin-bottom: 1.25rem; }
     .hero h1 span { color: var(--accent-light); }
     .hero p { color: var(--muted); font-size: 1.1rem; margin-bottom: 2rem; max-width: 580px; margin-left: auto; margin-right: auto; }
     .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-block; padding: 0.7rem 1.6rem; border-radius: 8px; font-weight: 600;
-      text-decoration: none; font-size: 0.95rem; transition: opacity 0.15s; cursor: pointer;
-      border: none; font-family: inherit;
-    }
+    .btn { display: inline-block; padding: 0.7rem 1.6rem; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 0.95rem; transition: opacity 0.15s; cursor: pointer; border: none; font-family: inherit; }
     .btn:hover { opacity: 0.85; }
     .btn-primary { background: var(--accent); color: #fff; }
     .btn-outline { border: 1px solid var(--border); color: var(--text); background: transparent; }
-
     section.block { max-width: 960px; margin: 0 auto; padding: 3rem 1.5rem; }
     h2.section-title { font-size: 1.3rem; margin-bottom: 1.5rem; text-align: center; }
-
     .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
     .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; }
     .feature-card .icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
     .feature-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 0.4rem; }
     .feature-card p { color: var(--muted); font-size: 0.88rem; }
-
     .privacy-strip { background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 2rem 1.5rem; text-align: center; }
     .privacy-strip h2 { font-size: 1.2rem; margin-bottom: 0.5rem; }
     .privacy-strip p { color: var(--muted); max-width: 580px; margin: 0 auto 1rem; font-size: 0.9rem; }
     .privacy-pillars { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 1.25rem; }
     .pillar { display: flex; align-items: center; gap: 0.4rem; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); border-radius: 99px; padding: 0.3rem 0.9rem; font-size: 0.82rem; color: var(--green); font-weight: 500; }
-
     ul.req { color: var(--muted); font-size: 0.9rem; padding-left: 1.5rem; list-style: disc; max-width: 620px; margin: 0 auto; }
-
-    /* ---- CONTACT ---- */
+    .faq details { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 0.5rem 1.1rem; margin-bottom: 0.75rem; }
+    .faq summary { cursor: pointer; font-weight: 600; padding: 0.6rem 0; font-size: 0.96rem; }
+    .faq details p { color: var(--muted); font-size: 0.9rem; padding: 0 0 0.7rem; }
     .contact { max-width: 560px; }
     .contact p.lead { color: var(--muted); text-align: center; font-size: 0.95rem; margin-bottom: 1.75rem; }
     form .field { margin-bottom: 1rem; }
     form label { display: block; font-size: 0.82rem; color: var(--muted); margin-bottom: 0.35rem; }
-    form input, form textarea {
-      width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px;
-      color: var(--text); padding: 0.7rem 0.85rem; font-size: 0.95rem; font-family: inherit;
-    }
+    form input, form textarea { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; color: var(--text); padding: 0.7rem 0.85rem; font-size: 0.95rem; font-family: inherit; }
     form input:focus, form textarea:focus { outline: none; border-color: var(--accent); }
     form textarea { resize: vertical; min-height: 120px; }
     .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
     form button { width: 100%; margin-top: 0.5rem; }
     #contact-status { text-align: center; font-size: 0.88rem; margin-top: 0.9rem; min-height: 1.2em; }
-
     footer { text-align: center; padding: 2rem 1.5rem; color: var(--muted); font-size: 0.82rem; }
     footer a { color: var(--muted); text-decoration: none; margin: 0 0.5rem; cursor: pointer; }
     footer a:hover { color: var(--text); }
@@ -90,61 +116,39 @@
 <body>
 
 <nav>
-  <span class="logo">ActivityVideoStudio</span>
+  <span class="logo"><img src="/assets/icon-256.png" alt="ActivityVideoStudio アイコン">ActivityVideoStudio</span>
   <div>
-    <a href="#features">機能 / Features</a>
-    <a href="#contact">お問い合わせ / Contact</a>
+    <a href="#features">機能</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">お問い合わせ</a>
+    <a href="https://apps.apple.com/app/activityvideostudio/id6764239734" target="_blank" rel="noopener">入手</a>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="badge">Coming soon · Mac App Store</div>
-  <h1>Activity Data<br><span>Overlay Studio</span></h1>
+  <div class="badge">Mac App Store で配信中 · 無料</div>
+  <h1>アクティビティデータを、<br><span>動画にオーバーレイ</span></h1>
   <p>
-    .FIT アクティビティデータとアクションカメラの動画を自動同期し、心拍・ペース・GPS トラックをオーバーレイ合成する macOS アプリ。<br>
+    GPSスマートウォッチの.FITデータとアクションカメラの映像を自動同期し、心拍・ペース・距離・標高・GPSトラックをリアルタイムに合成する macOS アプリ。<br>
     <em style="color: var(--muted); font-style: normal; font-size: 0.95rem;">
-      Sync your .FIT activity data with action-camera footage and render heart rate, pace, and GPS track overlays — natively on macOS.
+      Sync your .FIT activity data with action-camera footage and overlay heart rate, pace, and GPS track — natively on macOS.
     </em>
   </p>
   <div class="cta-group">
-    <a class="btn btn-primary" href="#contact">お問い合わせ / Get in touch</a>
-    <a class="btn btn-outline" href="#features">機能を見る / See features</a>
+    <a class="btn btn-primary" href="https://apps.apple.com/app/activityvideostudio/id6764239734" target="_blank" rel="noopener">Mac App Store で入手（無料）</a>
+    <a class="btn btn-outline" href="#features">機能を見る</a>
   </div>
 </section>
 
 <section id="features" class="block">
   <h2 class="section-title">機能 / Features</h2>
   <div class="features">
-    <div class="feature-card">
-      <div class="icon">🗺️</div>
-      <h3>GPS ミニマップ / GPS Minimap</h3>
-      <p>GPS トラックと現在位置を動画にリアルタイム表示。衛星画像タイルに対応。</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">❤️</div>
-      <h3>心拍ゾーンカラー / HR Zone Colors</h3>
-      <p>.FIT の心拍ゾーン設定を自動読み取り。ゾーン別にカラーコーディング。</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">📈</div>
-      <h3>標高プロファイル / Elevation Profile</h3>
-      <p>ルート全体の標高グラフに、進行インジケーターをリアルタイム描画。</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🎬</div>
-      <h3>大容量 4K 対応 / Large File Support</h3>
-      <p>ストリーミング処理により 10 GB 超の 4K 動画も安定してエクスポート。</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">🔗</div>
-      <h3>複数動画の自動結合 / Multi-Clip Join</h3>
-      <p>アクションカメラが分割した連番 MP4 を 1 本のオーバーレイ付き動画に。</p>
-    </div>
-    <div class="feature-card">
-      <div class="icon">✏️</div>
-      <h3>テキストオーバーレイ / Text Overlays</h3>
-      <p>任意のテキストを複数追加し、フェードイン / アウト付きで合成。</p>
-    </div>
+    <div class="feature-card"><div class="icon">🗺️</div><h3>GPS ミニマップ</h3><p>GPSトラックと現在位置を動画にリアルタイム表示。衛星画像タイルに対応。</p></div>
+    <div class="feature-card"><div class="icon">❤️</div><h3>心拍ゾーンカラー</h3><p>.FITの心拍ゾーン設定を自動読み取り。ゾーン別にカラーコーディング。</p></div>
+    <div class="feature-card"><div class="icon">📈</div><h3>標高プロファイル</h3><p>ルート全体の標高グラフに、進行インジケーターをリアルタイム描画。</p></div>
+    <div class="feature-card"><div class="icon">🎬</div><h3>大容量 4K 対応</h3><p>ストリーミング処理により10GB超の4K動画も安定してエクスポート。</p></div>
+    <div class="feature-card"><div class="icon">🔗</div><h3>複数動画の自動結合</h3><p>アクションカメラが分割した連番MP4を1本のオーバーレイ付き動画に。</p></div>
+    <div class="feature-card"><div class="icon">✏️</div><h3>テキストオーバーレイ</h3><p>任意のテキストを複数追加し、フェードイン/アウト付きで合成。</p></div>
   </div>
 </section>
 
@@ -152,44 +156,40 @@
   <h2>Privacy First / プライバシー最優先</h2>
   <p>ActivityVideoStudio はデータを一切収集しません。すべての処理は Mac 上でローカルに完結します。</p>
   <div class="privacy-pillars">
-    <span class="pillar">✓ No data collected</span>
-    <span class="pillar">✓ No server uploads</span>
-    <span class="pillar">✓ App Sandbox enabled</span>
-    <span class="pillar">✓ No analytics SDKs</span>
+    <span class="pillar">✓ データ収集なし</span>
+    <span class="pillar">✓ サーバー送信なし</span>
+    <span class="pillar">✓ App Sandbox 有効</span>
+    <span class="pillar">✓ 解析SDKなし</span>
   </div>
-  <a class="btn btn-outline" href="https://bokuno-studio.github.io/activity-video-studio/privacy.html" target="_blank" rel="noopener" style="font-size: 0.88rem; padding: 0.5rem 1.2rem;">Read Privacy Policy</a>
+  <a class="btn btn-outline" href="https://bokuno-studio.github.io/activity-video-studio/privacy.html" target="_blank" rel="noopener" style="font-size: 0.88rem; padding: 0.5rem 1.2rem;">プライバシーポリシー</a>
 </section>
 
 <section class="block" style="max-width: 760px;">
   <h2 class="section-title">動作環境 / Requirements</h2>
   <ul class="req">
-    <li>macOS 14 (Sonoma) 以上 / macOS 14 (Sonoma) or later</li>
-    <li>Apple Silicon または Intel Mac / Apple Silicon or Intel Mac</li>
-    <li>.FIT アクティビティファイル（GPS スマートウォッチで記録） / .FIT activity file (from a GPS smartwatch)</li>
-    <li>アクションカメラの MP4 動画 / Action-camera MP4 footage</li>
+    <li>macOS 14 (Sonoma) 以上 / Apple Silicon または Intel Mac</li>
+    <li>.FIT アクティビティファイル（GPS スマートウォッチで記録）</li>
+    <li>アクションカメラの MP4 動画（H.264 / HEVC、最大4K）</li>
   </ul>
+</section>
+
+<section id="faq" class="block faq" style="max-width: 720px;">
+  <h2 class="section-title">よくある質問 / FAQ</h2>
+  <details><summary>対応している機材・ファイルは？</summary><p>GPSスマートウォッチで記録した.FITアクティビティファイルと、アクションカメラのMP4動画（H.264 / HEVC、最大4K）に対応しています。</p></details>
+  <details><summary>料金はかかりますか？</summary><p>無料でご利用いただけます。</p></details>
+  <details><summary>データのプライバシーは？</summary><p>すべての処理はMac上でローカルに完結します。データ収集やサーバーへのアップロードは一切行いません。</p></details>
+  <details><summary>どんな項目を表示できますか？</summary><p>心拍数（ゾーン別カラー）、ペース、距離、標高プロファイル、ケイデンス、GPSミニマップなどをリアルタイムにオーバーレイ表示できます。</p></details>
+  <details><summary>長尺・大容量の動画でも使えますか？</summary><p>1〜15時間、10GB超の4K動画もストリーミング処理で安定して書き出せます。</p></details>
 </section>
 
 <section id="contact" class="block contact">
   <h2 class="section-title">お問い合わせ / Contact</h2>
-  <p class="lead">ご質問・ご要望・不具合のご報告など、お気軽にどうぞ。<br>Questions, feature requests, or bug reports — reach out anytime.</p>
+  <p class="lead">ご質問・ご要望・不具合のご報告など、お気軽にどうぞ。</p>
   <form id="contact-form" novalidate>
-    <div class="field">
-      <label for="name">お名前 / Name</label>
-      <input id="name" name="name" type="text" maxlength="100" required autocomplete="name">
-    </div>
-    <div class="field">
-      <label for="email">メールアドレス / Email（返信用）</label>
-      <input id="email" name="email" type="email" maxlength="200" required autocomplete="email">
-    </div>
-    <div class="field">
-      <label for="message">メッセージ / Message</label>
-      <textarea id="message" name="message" maxlength="5000" required></textarea>
-    </div>
-    <!-- honeypot: hidden from humans, bots tend to fill it -->
-    <div class="hp" aria-hidden="true">
-      <label>Company<input name="company" type="text" tabindex="-1" autocomplete="off"></label>
-    </div>
+    <div class="field"><label for="name">お名前 / Name</label><input id="name" name="name" type="text" maxlength="100" required autocomplete="name"></div>
+    <div class="field"><label for="email">メールアドレス / Email（返信用）</label><input id="email" name="email" type="email" maxlength="200" required autocomplete="email"></div>
+    <div class="field"><label for="message">メッセージ / Message</label><textarea id="message" name="message" maxlength="5000" required></textarea></div>
+    <div class="hp" aria-hidden="true"><label>Company<input name="company" type="text" tabindex="-1" autocomplete="off"></label></div>
     <button type="submit" class="btn btn-primary">送信する / Send</button>
     <p id="contact-status" role="status" aria-live="polite"></p>
   </form>
@@ -197,9 +197,10 @@
 
 <footer>
   <p>
-    <a href="#features">機能 / Features</a>
-    <a href="https://bokuno-studio.github.io/activity-video-studio/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>
-    <a href="#contact">お問い合わせ / Contact</a>
+    <a href="https://apps.apple.com/app/activityvideostudio/id6764239734" target="_blank" rel="noopener">Mac App Store</a>
+    <a href="#faq">FAQ</a>
+    <a href="https://bokuno-studio.github.io/activity-video-studio/privacy.html" target="_blank" rel="noopener">プライバシーポリシー</a>
+    <a href="#contact">お問い合わせ</a>
   </p>
   <p style="margin-top: 0.5rem;">&copy; 2026 bokuno-studio</p>
 </footer>
@@ -212,30 +213,20 @@
     statusEl.textContent = '';
     const btn = form.querySelector('button[type=submit]');
     const original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = '送信中… / Sending…';
+    btn.disabled = true; btn.textContent = '送信中… / Sending…';
     const data = Object.fromEntries(new FormData(form).entries());
     try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
-      });
+      const res = await fetch('/api/contact', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
       const json = await res.json().catch(() => ({}));
       if (res.ok && json.ok) {
         form.reset();
         statusEl.style.color = 'var(--green)';
         statusEl.textContent = '送信しました。ありがとうございます！ / Thanks — your message was sent.';
-      } else {
-        throw new Error(json.error || 'failed');
-      }
+      } else { throw new Error(json.error || 'failed'); }
     } catch (err) {
       statusEl.style.color = '#f87171';
-      statusEl.textContent = '送信に失敗しました。時間をおいて再度お試しください。 / Sending failed. Please try again later.';
-    } finally {
-      btn.disabled = false;
-      btn.textContent = original;
-    }
+      statusEl.textContent = '送信に失敗しました。時間をおいて再度お試しください。';
+    } finally { btn.disabled = false; btn.textContent = original; }
   });
 </script>
 
